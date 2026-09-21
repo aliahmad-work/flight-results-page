@@ -66,7 +66,7 @@ export function FilterSidebar({
     (typeof selectedMaxPrice === "number" && selectedMaxPrice < priceRange.max);
 
   return (
-    <aside className="w-full space-y-6" aria-label="Flight search filters">
+    <aside className="w-full min-w-0 space-y-6" aria-label="Flight search filters">
       {/* Header & Reset */}
       <div className="flex items-center justify-between pb-3 border-b border-gray-200">
         <h2 className="text-base font-bold text-gray-900">Filters</h2>
@@ -82,7 +82,7 @@ export function FilterSidebar({
       </div>
 
       {/* 1. Stops Filter */}
-      <fieldset className="space-y-3">
+      <fieldset className="min-w-0 w-full space-y-3">
         <legend className="text-sm font-semibold text-gray-900 mb-2">
           Stops
         </legend>
@@ -95,19 +95,19 @@ export function FilterSidebar({
               <label
                 key={opt.stops}
                 htmlFor={inputId}
-                className="flex items-center justify-between text-xs sm:text-sm text-gray-700 cursor-pointer hover:text-gray-900 py-1"
+                className="flex items-center justify-between gap-2 w-full text-xs sm:text-sm text-gray-700 cursor-pointer hover:text-gray-900 py-1"
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5 min-w-0 flex-1">
                   <input
                     type="checkbox"
                     id={inputId}
                     checked={isChecked}
                     onChange={() => handleStopToggle(valStr)}
-                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer shrink-0"
                   />
-                  <span>{opt.label}</span>
+                  <span className="truncate">{opt.label}</span>
                 </div>
-                <span className="text-xs text-gray-400 font-mono">
+                <span className="text-xs text-gray-400 font-mono shrink-0 ml-auto pl-2 text-right whitespace-nowrap">
                   {opt.minPrice ? `from ${formatCurrency(opt.minPrice)}` : `(${opt.count})`}
                 </span>
               </label>
@@ -117,11 +117,11 @@ export function FilterSidebar({
       </fieldset>
 
       {/* 2. Airlines Filter */}
-      <fieldset className="space-y-3 pt-4 border-t border-gray-100">
+      <fieldset className="min-w-0 w-full space-y-3 pt-4 border-t border-gray-100">
         <legend className="text-sm font-semibold text-gray-900 mb-2">
           Airlines
         </legend>
-        <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+        <div className="space-y-2 max-h-60 overflow-y-auto pr-2">
           {availableAirlines.map((airline) => {
             const isChecked = selectedAirlines.includes(airline.code);
             const inputId = `airline-${airline.code}`;
@@ -129,19 +129,19 @@ export function FilterSidebar({
               <label
                 key={airline.code}
                 htmlFor={inputId}
-                className="flex items-center justify-between text-xs sm:text-sm text-gray-700 cursor-pointer hover:text-gray-900 py-1"
+                className="flex items-center justify-between gap-2 w-full text-xs sm:text-sm text-gray-700 cursor-pointer hover:text-gray-900 py-1"
               >
-                <div className="flex items-center gap-2.5 min-w-0">
+                <div className="flex items-center gap-2.5 min-w-0 flex-1">
                   <input
                     type="checkbox"
                     id={inputId}
                     checked={isChecked}
                     onChange={() => handleAirlineToggle(airline.code)}
-                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer shrink-0"
                   />
-                  <span className="truncate">{airline.name}</span>
+                  <span className="truncate" title={airline.name}>{airline.name}</span>
                 </div>
-                <span className="text-xs text-gray-400 shrink-0 font-mono ml-2">
+                <span className="text-xs text-gray-400 shrink-0 font-mono ml-auto pl-2 text-right whitespace-nowrap">
                   {airline.minPrice ? formatCurrency(airline.minPrice) : `(${airline.count})`}
                 </span>
               </label>
